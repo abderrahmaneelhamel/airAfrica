@@ -46,7 +46,7 @@ public class AuthenticationServlet extends HttpServlet {
 
             Admin admin = adminRepository.Authenticate(email, password);
             if (admin != null) {
-                request.getSession().setAttribute("Admin", admin);
+                request.getSession().setAttribute("admin", admin);
                 response.sendRedirect(request.getContextPath() + "/dashboard");
             } else {
                 Traveller traveller = travellerRepository.Authenticate(email, password);

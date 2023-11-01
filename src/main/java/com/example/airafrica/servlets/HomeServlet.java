@@ -3,7 +3,9 @@ package com.example.airafrica.servlets;
 import java.io.*;
 import java.util.List;
 
+import com.example.airafrica.Entity.Admin;
 import com.example.airafrica.Entity.Airport;
+import com.example.airafrica.Repository.AdminRepository;
 import com.example.airafrica.Repository.AirportRepository;
 import jakarta.persistence.Persistence;
 import jakarta.servlet.ServletException;
@@ -21,6 +23,10 @@ public class HomeServlet extends HttpServlet {
     }
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         List<Airport> airports = airportRepository.getAllAirports();
+        for (Airport airport : airports){
+            System.out.println(airport.toString());
+        }
+
         request.getSession().setAttribute("airports", airports);
         request.getRequestDispatcher("home.jsp").forward(request, response);
     }

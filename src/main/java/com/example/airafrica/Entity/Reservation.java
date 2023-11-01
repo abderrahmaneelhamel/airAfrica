@@ -26,6 +26,15 @@ public class Reservation {
     @JoinColumn(name = "flight_class_id")
     private FlightClass flightClass;
 
+    @Column(name = "baggage_weight")
+    private int baggageWeight;
+
+    @Column(name = "total_cost")
+    private double totalCost;
+
+    @Column(name = "cancellation_status")
+    private boolean cancellationStatus;
+
     public Reservation() {
     }
 
@@ -74,5 +83,29 @@ public class Reservation {
 
     public void setFlightClass(FlightClass flightClass) {
         this.flightClass = flightClass;
+    }
+
+    public int getBaggageWeight() {
+        return baggageWeight;
+    }
+
+    public void setBaggageWeight(int baggageWeight) {
+        this.baggageWeight = baggageWeight;
+    }
+
+    public double getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(double totalCost) {
+        this.totalCost = totalCost;
+    }
+
+    public boolean isCancellationStatus() {
+        return cancellationStatus;
+    }
+
+    public void setCancellationStatus(boolean cancellationStatus) {
+        this.cancellationStatus = cancellationStatus;
     }
 }

@@ -3,6 +3,7 @@
 <%@ page import="com.example.airafrica.Entity.Traveller" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.airafrica.Entity.Airport" %>
+<%@ page import="com.example.airafrica.Entity.Extras" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,6 +33,7 @@
 <%
     Flight flight = (Flight) request.getAttribute("flight");
     Traveller traveller = (Traveller) request.getSession().getAttribute("Traveller");
+    List<Extras> availableExtras = (List<Extras>) request.getAttribute("availableExtras");
 %>
 <body>
 <div class="container-fluid bg-light pt-3 d-none d-lg-block">
@@ -132,7 +134,7 @@
             <h1>Flight Informations</h1>
         </div>
         <div class="row justify-content-center">
-            <div class="card1 w-75 p-4">
+            <div class="card1 w-75 p-4" style="height: auto">
                 <div class="card_container">
                     <div class="cloud front">
                         <span class="left-front"></span>
@@ -149,23 +151,43 @@
                 <p>Arrival Airport: <%= flight.getArrivalAirport().getCity() %></p>
                 <p>Departure Date: <%= (flight.getDepartureDate() != null) ? new SimpleDateFormat("yyyy-MM-dd").format(flight.getDepartureDate()) : "" %></p>
                 <div>
-                    <h4>Select Flight Class</h4>
-                    <form action="confirmation" method="post" class="row justify-content-sm-around">
+<%--                    <h4>Select Flight Class And Extras :</h4>--%>
+                    <form action="confirmation" method="post" class="col align-items-center justify-content-sm-around ">
                         <input type="hidden" name="flight_id" value="<%= flight.getId() %>">
+                        <div class="row justify-content-sm-around">
                         <label>Flight Class:</label>
-                        <select name="flight_class" class="custom-select w-25 rounded-lg">
+                        <select name="flight_class" class="row custom-select w-25 rounded-lg">
                             <option selected value="2">Economy Class</option>
                             <option value="1">Business Class</option>
                             <option value="3">First Class</option>
                         </select>
-                        <button class="btn btn-outline-warning rounded-lg" type="submit">Book Now</button>
+                        <div>
+                            <label>Baggage Weight (Kg):</label>
+                            <input type="number" name="baggage_weight" value="10" min="0" max="30">
+                        </div>
+                        </div>
+                        <div class="row justify-content-sm-between py-2 px-5">
+                        <div>
+                        <label>Select Extras:</label><br>
+                        <%
+                            for (Extras extra : availableExtras) {
+                        %>
+                        <input type="checkbox" name="selectedExtras" value="<%= extra.getId() %>">
+                        <%= extra.getName() %> (<%= extra.getPrice() %> MAD)<br>
+                        <%
+                            }
+                        %>
+                        </div>
+                            <div class="row justify-content-end align-baseline" style="align-items: end;">
+                                <button class="btn btn-outline-warning rounded-lg" style="max-height: 50px" type="submit">Book Now</button>
+                            </div>
+                        </div>
                     </form>
                 </div>
-            </div>
+                </div>
         </div>
     </div>
 </div>
-<!-- Destination Start -->
 
 
 <!-- Footer Start -->

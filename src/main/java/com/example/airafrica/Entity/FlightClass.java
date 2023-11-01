@@ -11,6 +11,9 @@ public class FlightClass {
     @Column(name = "class_name")
     private String className;
 
+    @Column(name = "base_price")
+    private double basePrice;
+
     public Long getId() {
         return id;
     }
@@ -43,9 +46,6 @@ public class FlightClass {
                 ", basePrice=" + basePrice +
                 '}';
     }
-
-    @Column(name = "base_price")
-    private double basePrice;
 
 }
 

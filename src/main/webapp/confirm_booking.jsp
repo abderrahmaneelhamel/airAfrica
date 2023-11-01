@@ -132,7 +132,9 @@
                         <p>Flight: <%= reservation.getFlight().getDepartureAirport().getCity() %> to <%= reservation.getFlight().getArrivalAirport().getCity() %></p>
                         <p>Departure Date: <%= (reservation.getFlight().getDepartureDate() != null) ? new SimpleDateFormat("yyyy-MM-dd").format(reservation.getFlight().getDepartureDate()) : "" %></p>
                         <p>Flight Class: <%= reservation.getFlightClass().getClassName() %></p>
-
+                        <p>Total Cost: <%= reservation.getTotalCost() %> MAD</p>
+                        <p>Baggage Weight: <%= reservation.getBaggageWeight() %> Kg</p>
+                        <p>Cancellation Status: <%= reservation.isCancellationStatus() ? "Cancellable" : "Non-Cancellable" %></p>
                         <p>Your booking has been confirmed. Thank you for choosing AIRAFRICA!</p>
                         <a class="btn btn-outline-success rounded-lg" href="/home">Back Home</a>
                     </div>

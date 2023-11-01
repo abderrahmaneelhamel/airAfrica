@@ -1,7 +1,9 @@
 package com.example.airafrica.servlets;
 import com.example.airafrica.Entity.Airport;
+import com.example.airafrica.Entity.Extras;
 import com.example.airafrica.Entity.Flight;
 import com.example.airafrica.Repository.AirportRepository;
+import com.example.airafrica.Repository.ExtrasRepository;
 import com.example.airafrica.Repository.FlightRepository;
 import jakarta.persistence.Persistence;
 import org.hibernate.SessionFactory;
@@ -21,12 +23,14 @@ import java.util.List;
 public class FlightServlet extends HttpServlet {
     private final FlightRepository flightRepository;
     private final AirportRepository airportRepository;
+    private final ExtrasRepository extrasRepository;
 
     private static final SessionFactory sessionFactory = Persistence.createEntityManagerFactory("PersistenceUnit").unwrap(SessionFactory.class);
 
     public FlightServlet() {
         flightRepository = new FlightRepository(sessionFactory);
         airportRepository = new AirportRepository(sessionFactory);
+        extrasRepository = new ExtrasRepository(sessionFactory);
     }
 
     @Override
@@ -34,8 +38,11 @@ public class FlightServlet extends HttpServlet {
         String id = request.getParameter("id");
         if(id != null){
             Flight flight = flightRepository.getFlight(Integer.parseInt(id));
+            List<Extras> availableExtras = extrasRepository.findAll();
             if(flight != null){
                 request.setAttribute("flight", flight);
+                request.setAttribute("availableExtras", availableExtras);
+                System.out.println(availableExtras.toString());
                 request.getRequestDispatcher("/flight.jsp").forward(request, response);
             }else{
                 response.sendRedirect(request.getContextPath() + "/home");

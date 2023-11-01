@@ -58,4 +58,27 @@ public class TravellerRepository {
             return traveller;
         }
     }
+    public void updateLoyaltyPoints(Traveller traveller, double totalCost) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+
+            // Check if the total cost is greater than or equal to 100 Euro
+            if (totalCost >= 100.0) {
+                // Calculate the loyalty points earned
+                int loyaltyPointsEarned = (int) (totalCost / 100) * 50;
+
+                // Update the traveler's loyalty points
+                traveller.setLoyaltyPoints(traveller.getLoyaltyPoints() + loyaltyPointsEarned);
+
+                // Save the updated traveler entity
+                session.update(traveller);
+
+                session.getTransaction().commit();
+            } else {
+                // If the total cost is less than 100 Euro, no loyalty points are earned
+                session.getTransaction().rollback();
+            }
+        }
+    }
+
 }

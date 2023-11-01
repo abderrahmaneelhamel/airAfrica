@@ -20,14 +20,6 @@ public class FlightRepository {
         }
     }
 
-    public Flight BookFlight(Flight flight) {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            session.save(flight);
-            session.getTransaction().commit();
-            return flight;
-        }
-    }
     public Flight getFlight(int id) {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("FROM Flight WHERE id = :id", Flight.class)
@@ -56,23 +48,33 @@ public class FlightRepository {
         }
     }
 
-
-    public void DeleteFlight(int id) {
+    public void saveFlight(Flight flight) {
         try (Session session = sessionFactory.openSession()) {
-            Flight flight = session.createQuery("FROM Flight WHERE id = :id", Flight.class)
-                                    .setParameter("id", id)
-                                    .uniqueResult();
             session.beginTransaction();
-            session.delete(flight);
+            session.save(flight);
             session.getTransaction().commit();
         }
     }
-    public void updateFlight(Flight flight) {
+    public void updateFlight(Flight flight){
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.update(flight);
             session.getTransaction().commit();
         }
     }
+
+    public void DeleteFlight(int flightId) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+
+            Flight flight = session.get(Flight.class, flightId);
+            if (flight != null) {
+                session.delete(flight);
+            }
+
+            session.getTransaction().commit();
+        }
+    }
+
 
 }

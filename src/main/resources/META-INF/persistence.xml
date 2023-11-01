@@ -13,6 +13,7 @@
             <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/airafrica" />
             <property name="hibernate.connection.username" value="postgres" />
             <property name="hibernate.connection.password" value="admin" />
+            <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
         </properties>
     </persistence-unit>
 </persistence>
